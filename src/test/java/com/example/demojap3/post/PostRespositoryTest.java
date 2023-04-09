@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
@@ -16,9 +18,11 @@ import java.util.Date;
 @Rollback(value = false)
 class PostRepositoryTest {
 
-
     @Autowired
     PostRespository postRespository;
+
+    @Autowired
+    ApplicationContext applicationContext;
 
 
     @Test
@@ -52,6 +56,18 @@ class PostRepositoryTest {
 
         Assertions.assertThat(postList.getNumberOfElements()).isEqualTo(2);
     }
+
+    @Test
+    public void event(){
+        Post post=new Post();
+        post.setTitle("event");
+        PostPublishedEvent event=new PostPublishedEvent(post);
+
+        applicationContext.publishEvent(event);
+    }
+
+
+
 
     @Test
     public void findMyPostTest(){

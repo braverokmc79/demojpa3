@@ -15,5 +15,4 @@ public class AppConfig {
     public JPAQueryFactory queryFactory(){
         return new JPAQueryFactory(em);
     }
-
 }
