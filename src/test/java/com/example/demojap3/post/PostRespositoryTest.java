@@ -14,7 +14,7 @@ import java.util.Date;
 @SpringBootTest
 @Transactional
 @Rollback(value = false)
-class PostRespositoryTest {
+class PostRepositoryTest {
 
 
     @Autowired
@@ -52,6 +52,31 @@ class PostRespositoryTest {
 
         Assertions.assertThat(postList.getNumberOfElements()).isEqualTo(2);
     }
+
+    @Test
+    public void findMyPostTest(){
+        System.out.println("custom findMyPostTest  ===>");
+        postRespository.findMyPost();
+
+    }
+
+
+    @Test
+    public void crud2(){
+        Post post=new Post();
+        post.setTitle("hibernate");
+
+        Assertions.assertThat(postRespository.contains(post)).isFalse();
+        postRespository.save(post);
+
+        Assertions.assertThat(postRespository.contains(post)).isTrue();
+
+        postRespository.deletePost(post);
+        postRespository.flush();
+    }
+
+
+
 
 
 }
