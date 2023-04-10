@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 @ToString(of={"title", "content"})
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
+//@NamedQuery(name="Post.findByTitle", query="SELECT p  FROM Post AS p WHERE p.title =:title")
 public class Post {
     @Id
     @GeneratedValue
