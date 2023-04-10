@@ -20,7 +20,7 @@ class PostControllerTest {
     MockMvc mockMvc;
 
     @Autowired
-    PostRepository postRepository;
+    PostMyRepository postRepository;
 
 
     @Test
@@ -38,9 +38,7 @@ class PostControllerTest {
 
     @Test
     public void getPosts() throws Exception{
-        Post post =new Post();
-        post.setTitle("jpa");
-        postRepository.save(post);
+        createPosts();
 
         mockMvc.perform(
                 get("/posts")
@@ -54,5 +52,14 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.content[0].title", is("jpa")));
     }
 
+    private void createPosts(){
+        int postsCount=100;
+        while(postsCount>0){
+            Post post =new Post();
+            post.setTitle("jpa");
+            postRepository.save(post);
+            postsCount--;
+        }
+    }
 
 }

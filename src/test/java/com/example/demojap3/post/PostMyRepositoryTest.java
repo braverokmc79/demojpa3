@@ -15,10 +15,10 @@ import java.util.Date;
 @SpringBootTest
 @Transactional
 @Rollback(value = false)
-class PostRepositoryTest {
+class PostMyRepositoryTest {
 
     @Autowired
-    PostRepository postRespository;
+    PostMyRepository postRespository;
 
     @Autowired
     ApplicationContext applicationContext;

@@ -1,7 +1,7 @@
 package com.example.demojap3.post;
 
-import com.example.demojap3.MyRepository;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostRepository extends MyRepository<Post, Long>, PostCustomRepository{
+public interface PostRepository extends JpaRepository<Post, Long> {
+
 }
