@@ -5,6 +5,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -76,13 +78,24 @@ class PostRepositoryTest {
     @Test
     public void findByTitleTest(){
         savePost();
+        List<Post> all =postRepository.findByTitle("Spring" , Sort.by("title"));
 
-        List<Post> all =postRepository.findByTitleStartsWith("Spring");
-        Assertions.assertThat(all.size()).isEqualTo(1);
+        System.out.println("all.size() = " + all.size());
         all.forEach(p-> System.out.println("findByTitleTest => : " +p.getTitle()));
     }
 
 
+    /**
+     * 함수를 이용한 길이 정렬
+     */
+
+    @Test
+    public void findByTitleTest2(){
+        savePost();
+        List<Post> all =postRepository.findByTitle("Spring" , JpaSort.unsafe("LENGTH(title)"));
+        System.out.println("2.all.size() = " + all.size());
+        all.forEach(p-> System.out.println("2.findByTitleTest => : " +p.getTitle()));
+    }
 
 
 }

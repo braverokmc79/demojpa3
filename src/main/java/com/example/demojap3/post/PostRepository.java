@@ -1,5 +1,6 @@
 package com.example.demojap3.post;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
      List<Post> findByTitleStartsWith(String title);
 
      @Query("SELECT p  FROM Post AS p WHERE p.title =:title")
-     List<Post> findByTitle(@Param("title") String title);
+     List<Post> findByTitle(@Param("title") String title, Sort sort);
 
 }
