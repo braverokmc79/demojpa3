@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootTest
@@ -70,11 +71,8 @@ class PostRepositoryTest {
         all.forEach(p-> System.out.println("p :getTitle : " +p.getTitle()));
     }
 
-    private void savePost() {
-        Post post =new Post();
-        post.setTitle("Spring Data Jpa");
-        postRepository.save(post);  //persist
-    }
+
+
     @Test
     public void findByTitleTest(){
         savePost();
@@ -96,6 +94,43 @@ class PostRepositoryTest {
         System.out.println("2.all.size() = " + all.size());
         all.forEach(p-> System.out.println("2.findByTitleTest => : " +p.getTitle()));
     }
+
+
+    private Post savePost() {
+        Post post =new Post();
+        post.setTitle("Spring Data Jpa");
+        return postRepository.save(post);  //persist
+    }
+
+    @Test
+    public void updateTitle(){
+        Post spring  =savePost();
+
+        String hibernate="hibernate";
+        int update=postRepository.updateTitle("hibernate", spring.getId());
+        Assertions.assertThat(update).isEqualTo(update);
+
+        Optional<Post> byId = postRepository.findById(spring.getId());
+        Assertions.assertThat(byId.get().getTitle()).isEqualTo(hibernate);
+    }
+
+    /**
+     *
+     * ==>
+     * 업데이트 는 다음과 같이 더티 체킹
+     */
+    @Test
+    public void updateTitle2(){
+        Post spring  =savePost();
+        spring.setTitle("hibernate");
+
+        List<Post> all=postRepository.findAll();
+        Assertions.assertThat(all.get(0).getTitle()).isEqualTo("hibernate");
+    }
+
+
+
+
 
 
 }
