@@ -1,9 +1,12 @@
 package com.example.demojap3.post;
 
+import com.example.demojap3.comment.Comment;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -13,6 +16,7 @@ import java.util.Date;
 public class Post {
     @Id
     @GeneratedValue
+    @Column(name = "post_id")
     private Long id;
 
     private String title;
@@ -27,6 +31,7 @@ public class Post {
         this.content = content;
     }
 
-
+    @OneToMany(mappedBy = "post")
+    public List<Comment> commentList=new ArrayList<>();
 
 }
